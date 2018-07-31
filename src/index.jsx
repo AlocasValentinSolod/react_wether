@@ -1,23 +1,10 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import './index.css';
-// import App from './App';
-// import registerServiceWorker from './registerServiceWorker';
-
-// ReactDOM.render(<App />, document.getElementById('root'));
-// registerServiceWorker();
 import React from 'react'
 import { render } from 'react-dom'
-import AwesomeComponent from './App.jsx'
+import { BrowserRouter } from 'react-router-dom'
+import Router from './router.jsx'
 
-class App extends React.Component {
-    render () {
-        return (
-            <div>
-                <AwesomeComponent />
-            </div>
-        )
-    }
-}
-
-render( <App />, document.getElementById( 'app' ) )
+render( (
+    <BrowserRouter>
+        <Router />
+    </BrowserRouter>
+), document.getElementById( 'app' ) )
