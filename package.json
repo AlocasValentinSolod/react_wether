@@ -23,6 +23,7 @@
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn start\""
   },
   "devDependencies": {
+    "axios": "^0.18.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.6",
     "babel-loader": "^7.1.5",
