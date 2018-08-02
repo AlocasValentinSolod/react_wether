@@ -30,9 +30,7 @@ class wetherApi extends Component {
     }
 
     render () {
-        this.ready = true
         return (
-
             <ul>
                 {
                     this.state.isLoading ? <p> isLoading </p> : this.state.data ? this.state.data.map( ( city, key ) => { return ( <li key={ key }> { city } </li> ) } ) : null
