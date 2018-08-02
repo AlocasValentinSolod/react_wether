@@ -5,6 +5,9 @@ var path = require('path');
 var BUILD_DIR = path.resolve(__dirname, 'public/');
 var APP_DIR = path.resolve(__dirname, 'src/');
 
+var devFlagPlugin = new webpack.DefinePlugin({
+  __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false'))
+});
 
 const htmlPlugin = new HtmlWebPackPlugin({
   template: "./public/index.html",
@@ -36,7 +39,12 @@ var config = {
       }
     ]
   },
-  plugins: [htmlPlugin]
+  plugins: [
+    htmlPlugin,
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
+    devFlagPlugin
+  ]
 };
 
 module.exports = config;

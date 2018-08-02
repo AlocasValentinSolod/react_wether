@@ -1,19 +1,14 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { cityNames } from './actions/actions';
 
 
 class wetherApi extends Component {
-    constructor () {
-        super()
-        this.state = {
-            isLoading: true
-        }
-    }
+   
 
     componentDidMount () {
         const API = 'http://api.openweathermap.org/data/2.5/box/city?bbox=12,32,15,37,10'
         const APPID = '&APPID=a3f49b01aa111337a90b621b60ca5e18'
-        console.log(this.ready)
-        this.setState( { isLoading: true } )
         fetch( API + APPID )
             .then( response => {
                 if ( response.ok ) {
@@ -24,20 +19,23 @@ class wetherApi extends Component {
             } )
             .then( data => {
                 const cityName = data.list.map( city => city.name )
-                cityName ? this.setState( { data: cityName, isLoading: false } ) : new Error()
-            } )
-            .catch( error => error ? this.setState( { error, isLoading: true } ) : this.setState( { error, isLoading: true } ) )
+                this.props.dispatch( cityNames( cityName ) )
+            } ) 
     }
 
     render () {
         return (
             <ul>
-                {
-                    this.state.isLoading ? <p> isLoading </p> : this.state.data ? this.state.data.map( ( city, key ) => { return ( <li key={ key }> { city } </li> ) } ) : null
-                }
+               { this.props.state.names ? this.props.state.names.map( ( name, key ) =>  <li key={ key } > { name } </li> ) : null }
             </ul>
         )
     };
 }
+  
+function mapStateToProps (state) {
+    return {
+      state
+    }
+  }
 
-export default wetherApi
+export default connect(mapStateToProps)(wetherApi)
