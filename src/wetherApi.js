@@ -4,7 +4,6 @@ import { cityNames } from './actions/actions';
 
 
 class wetherApi extends Component {
-   
 
     componentDidMount () {
         const API = 'http://api.openweathermap.org/data/2.5/box/city?bbox=12,32,15,37,10'
@@ -18,23 +17,48 @@ class wetherApi extends Component {
                 }
             } )
             .then( data => {
-                const cityName = data.list.map( city => city.name )
-                this.props.dispatch( cityNames( cityName ) )
-            } ) 
+                const cityStatus = data.list.map( cityStatus => cityStatus )
+                this.props.dispatch( cityNames( cityStatus ) )
+            } )
+            .catch( error => {
+                console.log( 'dataAPI.fetch error in wetherApi Component ! type -> ' + error)
+            } )
     }
+
+
+    createCityBlock = ( city , key ) => {
+        return (
+            <div className={ "cityblock" } key={ key } >
+                <p> { city.id } </p>
+                <p> { city.name } </p>
+                <p> { city.main.temp }</p>
+            </div>
+        )
+    }
+
+    RenderCity = citys => {
+        return(
+            citys.map( ( city, key ) => {
+                return (
+                    this.createCityBlock( city, key )
+                )
+            }
+        )
+    ) }
 
     render () {
         return (
-            <ul>
-               { this.props.state.names ? this.props.state.names.map( ( name, key ) =>  <li key={ key } > { name } </li> ) : null }
-            </ul>
+            <div>
+                {/* <button onClick={ () =>  this.RenderCity( this.props.state ) } >Render CityBlock</button> */}
+                <div id={ 'block' } > { this.props.state ? this.RenderCity( this.props.state ) : <p>Loading</p> } </div>
+            </div>
         )
     };
 }
   
 function mapStateToProps (state) {
     return {
-      state
+      state: state.cityStatus
     }
   }
 

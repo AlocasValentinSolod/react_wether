@@ -1,4 +1,4 @@
-export const cityNames = names => ({
+export const cityNames = ( cityStatus ) => ({
     type: 'CITY_NAMES',
-    names
+    cityStatus
 })
